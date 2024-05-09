@@ -5,27 +5,11 @@ import { recurringTimer } = "mo:base/Timer";
 
 actor Example {
 
-
-/*
-    type canister_status_response = {
-    status : {#stopped; #stopping; #running};
-    memory_size : Nat;
-    cycles : Nat;
-    freezing_threshold:Nat;
-  };*/
-
- 
-  //let ic = actor ("aaaaa-aa") : actor{
-        //canister_status :  query ( Principal) -> async canister_status_response;
-
-      //canister_status : query (Principal) -> async canister_status_response;
-      // start_canister : shared {canister_id : canister_id} -> async ();
-     //startCanister :(Principal) -> async ()  ;
-//};
+//Interface to implement Management Canister to retrieve freezing_threshold
 let IC = actor "aaaaa-aa" : actor {
       
-
-    canister_status : shared { canister_id : Principal} -> async {
+// Canister_Status api to retrieve important info regarding canister passed as an argument
+      canister_status : shared { canister_id : Principal} -> async {
       status : { #stopped; #stopping; #running };
       memory_size : Nat;
       cycles : Nat;
@@ -34,11 +18,9 @@ let IC = actor "aaaaa-aa" : actor {
     };
 };
 
-  public query func greet(name : Text) : async Text {
-    return "Hello there, " # name # "!";
-  };
-
-  public  func chk() : async() {
+ 
+// Function to check freezing threshold of a canister
+public  func checkThresholdAndSetTimer() : async() {
       Debug.print("Main balance: " # debug_show(Cycles.balance()));
       let canisterId : Principal  = Principal.fromActor(Example);
       let cStatus =  await IC.canister_status({canister_id = canisterId});
@@ -46,13 +28,12 @@ let IC = actor "aaaaa-aa" : actor {
 
   };
 
-          func checkBalance() :  async() {
-          Debug.print("Main balance: " # debug_show(Cycles.balance()));
+// Utility function to test Timer
+  func checkBalance() :  async() {
+      Debug.print("Main balance: " # debug_show(Cycles.balance()));
   };
 
-
-
-
+  // Set recurring Timer after every minute to run utility function CheckBalance()
   let daily = recurringTimer(#seconds (60), checkBalance);
   
 }

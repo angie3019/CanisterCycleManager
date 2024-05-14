@@ -1,9 +1,20 @@
 {
   "canisters": {
-    "CycleManager_backend": {
+    "mainExample":{
       "main": "src/CycleManager_backend/main.mo",
       "type": "motoko"
+    },
+    "battery":{
+      "main": "src/CycleManager_backend/Battery.mo",
+      "type": "motoko"
+    },
+
+    "child" :{
+      "main": "src/CycleManager_backend/Child.mo",
+      "type": "motoko"
     }
+
+    
   },
   "defaults": {
     "build": {

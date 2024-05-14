@@ -30,10 +30,10 @@ public  func checkThresholdAndSetTimer() : async() {
 
 // Utility function to test Timer
   func checkBalance() :  async() {
-      Debug.print("Main balance: " # debug_show(Cycles.balance()));
+     Debug.print("Main balance: " # debug_show(Cycles.balance()));
   };
 
   // Set recurring Timer after every minute to run utility function CheckBalance()
-  let daily = recurringTimer(#seconds (60), checkBalance);
+     let daily = recurringTimer(#seconds (60), checkBalance);
   
 }
